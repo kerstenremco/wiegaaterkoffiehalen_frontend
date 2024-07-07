@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* If fontawesome doesnt have color class, give it primary color */
+svg[data-icon]:not([class*="text-"]) {
+  color: #e07a5f;
+}

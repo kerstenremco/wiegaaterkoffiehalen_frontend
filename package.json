@@ -1,0 +1,49 @@
+{
+  "name": "react-wiegaaterkoffiehalen",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "tscb": "tsc --build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.423.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@nextui-org/react": "^2.1.13",
+    "@sentry/react": "^8.9.2",
+    "@sentry/vite-plugin": "^2.18.0",
+    "amazon-cognito-identity-js": "^6.3.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.13",
+    "react-lottie-player": "^2.0.0",
+    "react-use-websocket": "^4.5.0",
+    "socket.io-client": "^4.7.3",
+    "validator": "^13.11.0",
+    "vite-plugin-package-version": "^1.1.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.34",
+    "@types/react-dom": "^18.2.14",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.16",
+    "cypress": "^13.9.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1"
+  }
+}

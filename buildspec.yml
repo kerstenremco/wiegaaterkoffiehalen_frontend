@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  build:
+    install:
+      commands:
+        - npm install
+    commands:
+      - echo Build started on `date`
+      - npm run build
+      - aws s3 sync ./dist s3://wiegaaterkoffiehalen-react/ --exclude "*_Store" --delete
+  post_build:
+    commands:
+      - echo Build completed on `date`

@@ -249,6 +249,7 @@ const Main: React.FC<Props> = (props) => {
     }
 
     setCurrentGroup(group);
+    setCurrentGroupId(group.id);
     await getProfileFunction(); // Refresh profile so new group is added to menu
   };
   providerValue.updateGroupFunction = async (name: string) => {

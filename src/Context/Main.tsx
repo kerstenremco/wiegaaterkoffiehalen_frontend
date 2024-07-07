@@ -231,6 +231,7 @@ const Main: React.FC<Props> = (props) => {
       usersPatchRequest: { name, avatar, isInitSetup, verificationCode: code },
     });
     setProfile(response.profile);
+    if (response.groups) setMyGroups(response.groups);
   };
   providerValue.createGroupFunction = async (name: string) => {
     const groupsPostRequest: Api.GroupsPostRequest = { name };

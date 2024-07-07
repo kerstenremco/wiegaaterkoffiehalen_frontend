@@ -8,6 +8,7 @@ phases:
       - echo Build started on `date`
       - npm run build
       - aws s3 sync ./dist s3://wiegaaterkoffiehalen-react/ --exclude "*_Store" --delete
+      - aws cloudfront create-invalidation --distribution-id E1SY5SOQLD1LMR --paths "/*"
   post_build:
     commands:
       - echo Build completed on `date`

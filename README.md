@@ -19,9 +19,7 @@ This is the frontend of wiegaaterkoffiehalen.nl
 VITE_AVATAR_URL=https://app.wiegaaterkoffiehalen.nl/static/avatar/
 VITE_VER=x.x.x
 VITE_SENTRY_DSN=https://xxxxxx.ingest.sentry.io/123456789
-VITE_SENTRY_AUTH_TOKEN=xxx
 VITE_SOCKET_URL=ws://localhost:3000
-VITE_API_URL=http://localhost:3000/api/v1
 VITE_COGNITO_USERPOOL_ID=xxx
 VITE_COGNITO_CLIENT_ID=xxx
 VITE_ENVIRONMENT=dev

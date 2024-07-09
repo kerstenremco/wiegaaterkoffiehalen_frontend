@@ -19,6 +19,12 @@ import {
     OrderFromJSONTyped,
     OrderToJSON,
 } from './Order';
+import type { DrawingWho } from './DrawingWho';
+import {
+    DrawingWhoFromJSON,
+    DrawingWhoFromJSONTyped,
+    DrawingWhoToJSON,
+} from './DrawingWho';
 import type { Profile } from './Profile';
 import {
     ProfileFromJSON,
@@ -92,6 +98,12 @@ export interface Drawing {
      * @memberof Drawing
      */
     endsInSeconds: number;
+    /**
+     * 
+     * @type {DrawingWho}
+     * @memberof Drawing
+     */
+    who?: DrawingWho;
 }
 
 /**
@@ -131,6 +143,7 @@ export function DrawingFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
         'open': json['open'],
         'orders': ((json['orders'] as Array<any>).map(OrderFromJSON)),
         'endsInSeconds': json['EndsInSeconds'],
+        'who': json['who'] == null ? undefined : DrawingWhoFromJSON(json['who']),
     };
 }
 
@@ -150,6 +163,7 @@ export function DrawingToJSON(value?: Drawing | null): any {
         'open': value['open'],
         'orders': ((value['orders'] as Array<any>).map(OrderToJSON)),
         'EndsInSeconds': value['endsInSeconds'],
+        'who': DrawingWhoToJSON(value['who']),
     };
 }
 

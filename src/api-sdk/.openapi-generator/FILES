@@ -8,6 +8,7 @@ apis/UsersApi.ts
 apis/index.ts
 index.ts
 models/Drawing.ts
+models/DrawingWho.ts
 models/Drink.ts
 models/Group.ts
 models/GroupMember.ts

@@ -42,7 +42,8 @@ const ActiveGroup: React.FC<Props> = (props) => {
       if (
         !mainContext.currentGroup.activeDrawing &&
         mainContext.currentGroup.lastDrawing &&
-        mainContext.currentGroup.lastDrawing.endsInSeconds > -300
+        mainContext.currentGroup.lastDrawing.endsInSeconds > -300 &&
+        mainContext.currentGroup.lastDrawing.who
       ) {
         return setState("result");
       }
@@ -87,7 +88,13 @@ const ActiveGroup: React.FC<Props> = (props) => {
             {state == "newGroupInfo" && <NewGroupInfo />}
             {state == "noActiveDrawing" && <NoActiveDrawing setStartDrawing={() => setStartDrawing(true)} />}
             {state == "noGroup" && <NoGroup onCreateNewGroup={props.onCreateNewGroup} />}
-            {state == "result" && <Result who={"me"} self={true} startDrawing={() => setStartDrawing(true)} />}
+            {state == "result" && (
+              <Result
+                who={mainContext.currentGroup?.lastDrawing?.who?.name || ""}
+                self={mainContext.currentGroup?.lastDrawing?.who?.id == mainContext.profile?.id}
+                startDrawing={() => setStartDrawing(true)}
+              />
+            )}
           </div>
         </div>
       </div>

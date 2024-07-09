@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './Drawing';
+export * from './DrawingWho';
 export * from './Drink';
 export * from './Group';
 export * from './GroupMember';

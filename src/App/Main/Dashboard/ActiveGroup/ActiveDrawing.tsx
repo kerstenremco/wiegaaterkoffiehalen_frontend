@@ -31,7 +31,7 @@ const ActiveDrawing: React.FC<Props> = (props) => {
         totdat de volgende koffieronden plaatsvindt
       </div>
 
-      <Lottie loop animationData={coffeeMachine} play speed={0.1} segments={[34, 120]} style={{ height: 500 }} />
+      <Lottie loop animationData={coffeeMachine} play speed={0.1} segments={[34, 120]} style={{ maxHeight: 500, height: "60%" }} />
       {props.self && <p className=" text-center">Ps. {props.startedBy} haalt koffie voor jullie ;)</p>}
       {!props.self && <p className="text-center">Er vindt een loting plaats</p>}
       <Button className="w-1/4" color="primary" isDisabled={props.placedOrder} variant="shadow" onClick={props.handlePlaceOrder}>

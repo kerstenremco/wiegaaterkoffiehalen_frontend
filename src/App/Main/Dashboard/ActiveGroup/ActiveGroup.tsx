@@ -13,7 +13,11 @@ import { faSliders } from "@fortawesome/free-solid-svg-icons";
 
 import NoGroup from "./NoGroup";
 
-type Props = { test?: string; onCreateNewGroup: () => void; onEditGroup: () => void };
+type Props = {
+  test?: string;
+  onCreateNewGroup: () => void;
+  onEditGroup: () => void;
+};
 export type SettingsContext = null | "profile" | "group";
 
 const ActiveGroup: React.FC<Props> = (props) => {
@@ -70,7 +74,7 @@ const ActiveGroup: React.FC<Props> = (props) => {
               onClick={props.onEditGroup}
             />
           )}
-          <div className="flex flex-col flex-1 justify-center items-center gap-10" id="groupState">
+          <div className="flex flex-col flex-1 justify-center items-center gap-10 h-full" id="groupState">
             {state == "activeDrawing" && mainContext.currentGroup?.activeDrawing && (
               <ActiveDrawing
                 self={mainContext.currentGroup.activeDrawing.self}

@@ -5,7 +5,7 @@ import { together } from "../../../../assets/lottie";
 const NoActiveDrawing: React.FC<{ setStartDrawing: () => void }> = (props) => {
   return (
     <>
-      <Lottie loop animationData={together} play speed={0.1} segments={[34, 120]} style={{ height: 500 }} />
+      <Lottie loop animationData={together} play speed={0.1} segments={[34, 120]} style={{ maxHeight: 500, height: "60%" }} />
       <B className="w-1/4" color="primary" variant="shadow" onClick={props.setStartDrawing}>
         Koffieronde starten
       </B>

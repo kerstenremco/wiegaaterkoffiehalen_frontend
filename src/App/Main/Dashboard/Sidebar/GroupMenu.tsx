@@ -4,7 +4,6 @@ import { faChevronDown, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { GroupMember } from "../../../../api-sdk";
 import { useNavigate } from "react-router-dom";
 
-
 type Props = { groups: GroupMember[]; onCreateNewGroup: () => void; currentGroupName?: string };
 const GroupMenu: React.FC<Props> = (props) => {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ const GroupMenu: React.FC<Props> = (props) => {
     <Dropdown>
       <DropdownTrigger>
         <div className="bg-primary-200 flex items-center gap-2 p-2 cursor-pointer rounded-lg">
-          <Avatar className="w-6 h-6 xl:h-10 xl:w-10" name={"groupContext.currentGroup.name"} />
+          <Avatar className="w-6 h-6 xl:h-10 xl:w-10" name={props.currentGroupName} />
           <span className="flex-1 hidden xl:block">{props.currentGroupName || "Selecteer groep"}</span>
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
@@ -22,7 +21,11 @@ const GroupMenu: React.FC<Props> = (props) => {
       <DropdownMenu aria-label="Dynamic Actions">
         <DropdownSection showDivider>
           {props.groups.map((group) => (
-            <DropdownItem key={group.id} color="primary" startContent={<Avatar name={group.name} />} onClick={() => navigate(`/dashboard/groups/${group.id}`)}>
+            <DropdownItem
+              key={group.id}
+              color="primary"
+              startContent={<Avatar name={group.name} />}
+              onClick={() => navigate(`/dashboard/groups/${group.id}`)}>
               {group.name}
             </DropdownItem>
           ))}

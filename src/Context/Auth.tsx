@@ -48,9 +48,9 @@ const Auth: React.FC<Props> = (props) => {
       const accessToken = await authUtils.loadAccessToken();
       setAccessToken(accessToken);
       const urlParams = new URLSearchParams(window.location.search);
-      const redirectToGroup = urlParams.get('redirectToGroup')
-      if(redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
-      else navigate("/dashboard");
+      const redirectToGroup = urlParams.get("redirectToGroup");
+      if (redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
+      else navigate("/dashboard/groups/default");
     } catch (e) {
       if (typeof e == "string") setAuthenticationError(e);
       else setAuthenticationError("Er is iets fout gegaan");
@@ -65,9 +65,9 @@ const Auth: React.FC<Props> = (props) => {
       const accessToken = await authUtils.loadAccessToken();
       setAccessToken(accessToken);
       const urlParams = new URLSearchParams(window.location.search);
-      const redirectToGroup = urlParams.get('redirectToGroup');
-      if(redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
-      else navigate("/dashboard");
+      const redirectToGroup = urlParams.get("redirectToGroup");
+      if (redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
+      else navigate("/dashboard/groups/default");
     } catch (e) {
       if (typeof e == "string") setAuthenticationError(e);
       else setAuthenticationError("Er is iets fout gegaan");
@@ -83,9 +83,9 @@ const Auth: React.FC<Props> = (props) => {
       await signIn(email, password);
       const navigate = useNavigate();
       const urlParams = new URLSearchParams(window.location.search);
-      const redirectToGroup = urlParams.get('redirectToGroup')
-      if(redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
-      else navigate("/dashboard");
+      const redirectToGroup = urlParams.get("redirectToGroup");
+      if (redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
+      else navigate("/dashboard/groups/default");
     } catch (e) {
       if (typeof e == "string") setAuthenticationError(e);
       else setAuthenticationError("Er is iets fout gegaan");
@@ -103,7 +103,6 @@ const Auth: React.FC<Props> = (props) => {
       else setAuthenticationError("Er is iets fout gegaan");
     } finally {
       setWaitingForCognito(false);
-      
     }
   };
 

@@ -1,17 +1,12 @@
 import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { AuthContext } from "./Auth";
-import {
-  Profile,
-  GroupMember,
-  Group,
-  MemberAddedMessageEnum,
-} from "../api-sdk";
+import { Profile, GroupMember, Group, MemberAddedMessageEnum } from "../api-sdk";
 import { io } from "socket.io-client";
 import * as Api from "../api-sdk";
-import { useNavigate } from "react-router-dom";
+import { useParams, Navigator, useNavigation, useNavigate } from "react-router-dom";
 
 const configuration = new Api.Configuration({
-  basePath: import.meta.env.VITE_API_PATH,
+  basePath: import.meta.env.VITE_API_PATH
 });
 
 // type SignIn = (email: string, password: string) => Promise<void>;
@@ -22,40 +17,16 @@ interface IMainContext {
   ownerOfCurrentGroup: boolean;
   onlineMembers: string[];
   loadGroup: (groupId: string) => void;
-  updateProfileFunction: (
-    name: string,
-    avatar: string,
-    initSetup?: boolean,
-    verificationCode?: string
-  ) => Promise<void>;
+  updateProfileFunction: (name: string, avatar: string, initSetup?: boolean, verificationCode?: string) => Promise<void>;
   updateGroupFunction: (name: string) => Promise<void>;
   deleteGroupFunction: () => Promise<void>;
   createGroupFunction: (name: string) => Promise<void>;
-  createDrinkFunction: (
-    name: string,
-    icon: string,
-    extras: string
-  ) => Promise<void>;
-  updateDrinkFunction: (
-    drinkId: string,
-    name: string,
-    icon: string,
-    extras: string
-  ) => Promise<void>;
+  createDrinkFunction: (name: string, icon: string, extras: string) => Promise<void>;
+  updateDrinkFunction: (drinkId: string, name: string, icon: string, extras: string) => Promise<void>;
   deleteDrinkFunction: (drinkId: string) => Promise<void>;
-  toggleNotificationFunction: (
-    groupId: string,
-    email: boolean
-  ) => Promise<void>;
-  placeOrderFunction: (
-    drink: string,
-    text?: string,
-    extras?: string
-  ) => Promise<void>;
-  addMemberFunction: (
-    email: string,
-    isInvite: boolean
-  ) => Promise<MemberAddedMessageEnum | undefined>;
+  toggleNotificationFunction: (groupId: string, email: boolean) => Promise<void>;
+  placeOrderFunction: (drink: string, text?: string, extras?: string) => Promise<void>;
+  addMemberFunction: (email: string, isInvite: boolean) => Promise<MemberAddedMessageEnum | undefined>;
   changeMemberOwner: (userId: string, isOwner: boolean) => Promise<void>;
   removeMemberFunction: (userId: string, invite: boolean) => Promise<void>;
   startDrawing: (seconds: number, self: boolean) => Promise<void>;
@@ -71,34 +42,29 @@ type Props = {
 
 const Main: React.FC<Props> = (props) => {
   const authContext = useContext(AuthContext);
+  const { groupId } = useParams();
   const navigate = useNavigate();
-  if (!authContext || typeof authContext.accessToken != "string")
-    throw new Error("No Auth context");
+  if (!authContext || typeof authContext.accessToken != "string") throw new Error("No Auth context");
   const accessToken = authContext.accessToken;
   // States
   const socket = useRef<Socket | null>(null);
   const [profile, setProfile] = useState<Profile | undefined>(undefined);
   const [myGroups, setMyGroups] = useState<GroupMember[]>([]);
-  const [currentGroupId, setCurrentGroupId] = useState<string | undefined>(
-    undefined
-  );
-  const [currentGroup, setCurrentGroup] = useState<Group | undefined>(
-    undefined
-  );
+  const [currentGroupId, setCurrentGroupId] = useState<string | undefined>(undefined);
+  const [currentGroup, setCurrentGroup] = useState<Group | undefined>(undefined);
   const [ownerOfCurrentGroup, setOwnerOfCurrentGroup] = useState(false);
   const [onlineMembers, setOnlineMembers] = useState<string[]>([]);
   const [socketMessages, setSocketMessages] = useState<[string, any][]>([]);
-  const [alertMessage, setAlertMessage] = useState<string | undefined>(
-    undefined
-  );
+  const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
   const providerValue: IMainContext = {
     profile,
     myGroups,
     currentGroup,
     ownerOfCurrentGroup,
     onlineMembers,
-    alertMessage,
+    alertMessage
   };
+
   // Socket
   const socketUrl = import.meta.env.VITE_SOCKET_URL;
   useEffect(() => {
@@ -114,20 +80,15 @@ const Main: React.FC<Props> = (props) => {
       if (currentGroupId)
         socket.current.emit("switchGroup", {
           token: accessToken,
-          message: currentGroupId,
+          message: currentGroupId
         });
     }
 
-    const userOnline = (m) =>
-      setSocketMessages((prev) => [...prev, ["user-online", m]]);
-    const userOffline = (m) =>
-      setSocketMessages((prev) => [...prev, ["user-offline", m]]);
-    const onOnlineMembers = (m) =>
-      setSocketMessages((prev) => [...prev, ["online-members", m]]);
-    const refreshGroup = () =>
-      setSocketMessages((prev) => [...prev, ["refresh-group", undefined]]);
-    const refreshProfile = () =>
-      setSocketMessages((prev) => [...prev, ["refresh-profile", undefined]]);
+    const userOnline = (m) => setSocketMessages((prev) => [...prev, ["user-online", m]]);
+    const userOffline = (m) => setSocketMessages((prev) => [...prev, ["user-offline", m]]);
+    const onOnlineMembers = (m) => setSocketMessages((prev) => [...prev, ["online-members", m]]);
+    const refreshGroup = () => setSocketMessages((prev) => [...prev, ["refresh-group", undefined]]);
+    const refreshProfile = () => setSocketMessages((prev) => [...prev, ["refresh-profile", undefined]]);
 
     socket.current.on("connect", onConnect);
     // socket.current.on("disconnect", onDisconnect);
@@ -175,12 +136,15 @@ const Main: React.FC<Props> = (props) => {
     }
   }, [socketMessages]);
 
-  // If no group selected yet, check if group is provider in url, or select first group
   useEffect(() => {
-    if (!currentGroupId && myGroups.length > 0) {
-      providerValue.loadGroup(myGroups[0].id);
+    if (groupId && groupId != currentGroupId) {
+      if (groupId == "default") {
+        if (myGroups.length > 0) navigate(`/dashboard/groups/${myGroups[0].id}`);
+      } else {
+        providerValue.loadGroup(groupId);
+      }
     }
-  }, [myGroups]);
+  }, [groupId, myGroups]);
 
   // Get profile
   const getProfileFunction = async () => {
@@ -196,13 +160,12 @@ const Main: React.FC<Props> = (props) => {
     const group = await groupApi.groupsGroupIdGet({ accessToken, groupId });
     setCurrentGroup(group);
     // Check if user is owner
-    const owner =
-      group.members.find((m) => m.user.id == profile?.id)?.owner || false;
+    const owner = group.members.find((m) => m.user.id == profile?.id)?.owner || false;
     setOwnerOfCurrentGroup(owner);
     // Say room is joined over socket
     socket.current.emit("switchGroup", {
       token: accessToken,
-      message: groupId,
+      message: groupId
     });
   };
   // On mount
@@ -212,18 +175,13 @@ const Main: React.FC<Props> = (props) => {
   //   const [emailOfCurrentUser, setEmailOfCurrentUser] = useState<string | null>(null);
 
   // Funtions
-  providerValue.updateProfileFunction = async (
-    name: string,
-    avatar: string,
-    InitSetup?: boolean,
-    verificationCode?: string
-  ) => {
+  providerValue.updateProfileFunction = async (name: string, avatar: string, InitSetup?: boolean, verificationCode?: string) => {
     const isInitSetup = InitSetup || false;
     const usersApi = new Api.UsersApi(configuration);
     const code = Number(verificationCode) || undefined;
     const response = await usersApi.usersPatch({
       accessToken,
-      usersPatchRequest: { name, avatar, isInitSetup, verificationCode: code },
+      usersPatchRequest: { name, avatar, isInitSetup, verificationCode: code }
     });
     setProfile(response.profile);
     if (response.groups) setMyGroups(response.groups);
@@ -236,8 +194,7 @@ const Main: React.FC<Props> = (props) => {
       group = await groupApi.groupsPost({ accessToken, groupsPostRequest });
     } catch (e) {
       if (e instanceof Api.ResponseError) {
-        if (e.response.status == 403)
-          return setAlertMessage("Je mag maximaal 5 groepen aanmaken.");
+        if (e.response.status == 403) return setAlertMessage("Je mag maximaal 5 groepen aanmaken.");
         else return console.error(e);
       }
       return console.error(e);
@@ -254,7 +211,7 @@ const Main: React.FC<Props> = (props) => {
     await groupApi.groupsGroupIdPatch({
       accessToken,
       groupId: currentGroupId,
-      groupsPostRequest,
+      groupsPostRequest
     });
     // No refresh needed because socket sends update request
   };
@@ -266,44 +223,35 @@ const Main: React.FC<Props> = (props) => {
     setCurrentGroup(undefined);
     await getProfileFunction(); // Refresh profile so group is removed from menu
   };
-  providerValue.createDrinkFunction = async (
-    name: string,
-    icon: string,
-    extras: string
-  ) => {
+  providerValue.createDrinkFunction = async (name: string, icon: string, extras: string) => {
     if (!currentGroup || !currentGroupId) return;
     const groupsGroupIdDrinksPostRequest: Api.GroupsGroupIdDrinksPostRequest = {
       name,
       icon,
-      extras,
+      extras
     };
     const api = new Api.GroupDrinksApi(configuration);
     await api.groupsGroupIdDrinksPost({
       accessToken,
       groupId: currentGroupId,
-      groupsGroupIdDrinksPostRequest,
+      groupsGroupIdDrinksPostRequest
     });
     // No refresh needed because socket sends update request
     providerValue.loadGroup(currentGroupId);
   };
-  providerValue.updateDrinkFunction = async (
-    drinkId: string,
-    name: string,
-    icon: string,
-    extras: string
-  ) => {
+  providerValue.updateDrinkFunction = async (drinkId: string, name: string, icon: string, extras: string) => {
     if (!currentGroup || !currentGroupId) return;
     const groupsGroupIdDrinksPostRequest: Api.GroupsGroupIdDrinksPostRequest = {
       name,
       icon,
-      extras,
+      extras
     };
     const api = new Api.GroupDrinksApi(configuration);
     await api.groupsGroupIdDrinksDrinkIdPatch({
       accessToken,
       groupId: currentGroupId,
       drinkId,
-      groupsGroupIdDrinksPostRequest,
+      groupsGroupIdDrinksPostRequest
     });
     // No refresh needed because socket sends update request
     providerValue.loadGroup(currentGroupId);
@@ -314,7 +262,7 @@ const Main: React.FC<Props> = (props) => {
     const response = await api.groupsGroupIdDrinksDrinkIdDeleteRaw({
       accessToken,
       groupId: currentGroupId,
-      drinkId,
+      drinkId
     });
     if (response.raw.status == 204) providerValue.loadGroup(currentGroupId);
     if (response.raw.status == 200) {
@@ -324,108 +272,84 @@ const Main: React.FC<Props> = (props) => {
       }
     }
   };
-  providerValue.placeOrderFunction = async (
-    drink: string,
-    text?: string,
-    extras?: string
-  ) => {
-    if (!currentGroup || !currentGroupId || !currentGroup.activeDrawing?.id)
-      return;
-    const groupsGroupIdDrawingsDrawingIdPostRequest: Api.GroupsGroupIdDrawingsDrawingIdPostRequest =
-      { drink, text, extras };
+  providerValue.placeOrderFunction = async (drink: string, text?: string, extras?: string) => {
+    if (!currentGroup || !currentGroupId || !currentGroup.activeDrawing?.id) return;
+    const groupsGroupIdDrawingsDrawingIdPostRequest: Api.GroupsGroupIdDrawingsDrawingIdPostRequest = { drink, text, extras };
     const api = new Api.GroupDrawingsApi(configuration);
     await api.groupsGroupIdDrawingsDrawingIdPost({
       accessToken,
       groupId: currentGroupId,
       drawingId: currentGroup.activeDrawing.id,
-      groupsGroupIdDrawingsDrawingIdPostRequest,
+      groupsGroupIdDrawingsDrawingIdPostRequest
     });
     providerValue.loadGroup(currentGroupId);
     // No refresh needed because socket sends update request
   };
   providerValue.addMemberFunction = async (email: string, invite: boolean) => {
     if (!currentGroup || !currentGroupId) return;
-    const groupsGroupIdMembersPostRequest: Api.GroupsGroupIdMembersPostRequest =
-      { email, invite };
+    const groupsGroupIdMembersPostRequest: Api.GroupsGroupIdMembersPostRequest = { email, invite };
     const api = new Api.GroupMemberApi(configuration);
     const response = await api.groupsGroupIdMembersPost({
       accessToken,
       groupId: currentGroupId,
-      groupsGroupIdMembersPostRequest,
+      groupsGroupIdMembersPostRequest
     });
     providerValue.loadGroup(currentGroupId);
-    if (response.message == "MAX_MEMBERS")
-      setAlertMessage("Maximaal 20 leden per groep zijn toegestaan.");
+    if (response.message == "MAX_MEMBERS") setAlertMessage("Maximaal 20 leden per groep zijn toegestaan.");
     return response.message;
     // No refresh needed because socket sends update request
   };
-  providerValue.changeMemberOwner = async (
-    userId: string,
-    isOwner: boolean
-  ) => {
+  providerValue.changeMemberOwner = async (userId: string, isOwner: boolean) => {
     if (!currentGroup || !currentGroupId) return;
-    const groupsGroupIdMembersUserIdPatchRequest: Api.GroupsGroupIdMembersUserIdPatchRequest =
-      { isOwner };
+    const groupsGroupIdMembersUserIdPatchRequest: Api.GroupsGroupIdMembersUserIdPatchRequest = { isOwner };
     const api = new Api.GroupMemberApi(configuration);
     await api.groupsGroupIdMembersUserIdPatch({
       accessToken,
       groupId: currentGroupId,
       userId,
-      groupsGroupIdMembersUserIdPatchRequest,
+      groupsGroupIdMembersUserIdPatchRequest
     });
     providerValue.loadGroup(currentGroupId);
     // No refresh needed because socket sends update request
   };
-  providerValue.removeMemberFunction = async (
-    userId: string,
-    isInvite: boolean
-  ) => {
+  providerValue.removeMemberFunction = async (userId: string, isInvite: boolean) => {
     if (!currentGroup || !currentGroupId) return;
     const api = new Api.GroupMemberApi(configuration);
-    const groupsGroupIdMembersUserIdDeleteRequest: Api.GroupsGroupIdMembersUserIdDeleteRequest =
-      { isInvite };
+    const groupsGroupIdMembersUserIdDeleteRequest: Api.GroupsGroupIdMembersUserIdDeleteRequest = { isInvite };
     await api.groupsGroupIdMembersUserIdDelete({
       accessToken,
       groupId: currentGroupId,
       userId,
-      groupsGroupIdMembersUserIdDeleteRequest,
+      groupsGroupIdMembersUserIdDeleteRequest
     });
     providerValue.loadGroup(currentGroupId);
     // No refresh needed because socket sends update request
   };
-  providerValue.toggleNotificationFunction = async (
-    groupId: string,
-    email: boolean
-  ) => {
+  providerValue.toggleNotificationFunction = async (groupId: string, email: boolean) => {
     if (!currentGroup || !currentGroupId) return;
     const groupNotificationApi = new Api.GroupNotificationApi(configuration);
     await groupNotificationApi.groupsGroupIdNotificationsPost({
       accessToken,
       groupId,
-      groupsGroupIdNotificationsPostRequest: { email },
+      groupsGroupIdNotificationsPostRequest: { email }
     });
     await getProfileFunction();
   };
   providerValue.startDrawing = async (seconds: number, self: boolean) => {
     if (!currentGroup || !currentGroupId) return;
     const api = new Api.GroupDrawingsApi(configuration);
-    const groupsGroupIdDrawingsPostRequest: Api.GroupsGroupIdDrawingsPostRequest =
-      { seconds, self };
+    const groupsGroupIdDrawingsPostRequest: Api.GroupsGroupIdDrawingsPostRequest = { seconds, self };
     await api.groupsGroupIdDrawingsPost({
       accessToken,
       groupId: currentGroupId,
-      groupsGroupIdDrawingsPostRequest,
+      groupsGroupIdDrawingsPostRequest
     });
     providerValue.loadGroup(currentGroupId);
   };
 
   providerValue.acknowledgeAlert = () => setAlertMessage(undefined);
   //TODO: Herschijven
-  return (
-    <MainContext.Provider value={providerValue}>
-      {props.children}
-    </MainContext.Provider>
-  );
+  return <MainContext.Provider value={providerValue}>{props.children}</MainContext.Provider>;
 };
 
 export default Main;

@@ -22,28 +22,6 @@ const OnlineUsers: React.FC<Props> = (props) => {
           />
         );
       })}
-      {props.users?.map((user) => {
-        if (!user.user.name) return; // User didn't create profile yet
-        return (
-          <User
-            key={user.id}
-            name={user.user.name}
-            avatar={user.user.avatar}
-            isOnline={props.onlineUsers.includes(user.user.id) || user.user.id == props.ownUserId}
-          />
-        );
-      })}
-      {props.users?.map((user) => {
-        if (!user.user.name) return; // User didn't create profile yet
-        return (
-          <User
-            key={user.id}
-            name={user.user.name}
-            avatar={user.user.avatar}
-            isOnline={props.onlineUsers.includes(user.user.id) || user.user.id == props.ownUserId}
-          />
-        );
-      })}
     </div>
   );
 };

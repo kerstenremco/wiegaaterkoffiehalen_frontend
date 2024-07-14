@@ -44,7 +44,7 @@ const Onboard: React.FC = () => {
     if (!name || !avatar || !verificationCode) return;
     setIsLoading(true);
     try {
-      await mainContext.updateProfileFunction(name, avatar, true, verificationCode);
+      await mainContext.updateProfileFunction({ name, avatar, InitSetup: true, verificationCode });
     } catch (e) {
       setError("Mislukt. Klopt de verificatiecode?");
       console.error(e);

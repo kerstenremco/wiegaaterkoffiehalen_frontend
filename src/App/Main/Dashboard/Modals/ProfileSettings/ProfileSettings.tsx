@@ -1,5 +1,5 @@
-import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Switch, Tab, Tabs } from "@nextui-org/react";
+import { faBell, faUser, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Switch, Tab, Tabs, Tooltip } from "@nextui-org/react";
 import { Fragment, useContext, useEffect, useState } from "react";
 // Context
 import { MainContext } from "../../../../../Context/Main";
@@ -7,7 +7,7 @@ import { MainContext } from "../../../../../Context/Main";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Emojis from "../../../../../Components/Emojis";
 
-type Props = { onClose: () => void; isOpen: boolean };
+type Props = { onClose: () => void; isOpen: boolean; onEditPhoneNumber: () => void };
 
 const ProfileSettings: React.FC<Props> = (props) => {
   // Context
@@ -43,7 +43,7 @@ const ProfileSettings: React.FC<Props> = (props) => {
   // Functions: handle confirm
   const handleConfirm = async () => {
     if (blade == "profile") {
-      await mainContext.updateProfileFunction(newName, newAvatar);
+      await mainContext.updateProfileFunction({ name: newName, avatar: newAvatar });
       setValide(false);
     }
   };
@@ -69,6 +69,18 @@ const ProfileSettings: React.FC<Props> = (props) => {
                     }>
                     <div className="grid gap-6">
                       <Input type="text" label="Naam" onChange={(e) => setName(e.target.value)} value={newName} />
+                      <div className="flex gap-4 items-center">
+                        <Input
+                          type="text"
+                          label="Telefoonnummer"
+                          onChange={(e) => setName(e.target.value)}
+                          value={mainContext.profile?.phoneNumberVerified ? mainContext.profile?.phoneNumber : ""}
+                          disabled={true}
+                        />
+                        <Tooltip color="primary" showArrow={true} content="Telefoonnummer toevoegen">
+                          <FontAwesomeIcon icon={faSquarePlus} size="2x" className="text-primary" onClick={props.onEditPhoneNumber} />
+                        </Tooltip>
+                      </div>
                       <Emojis current={newAvatar} onClick={(filename) => setAvatar(filename)} />
                     </div>
                   </Tab>

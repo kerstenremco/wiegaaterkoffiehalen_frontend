@@ -45,6 +45,12 @@ export interface GroupMember {
     emailNotification: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof GroupMember
+     */
+    whatsappNotification: boolean;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof GroupMember
      */
@@ -58,6 +64,7 @@ export function instanceOfGroupMember(value: object): value is GroupMember {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('emailNotification' in value) || value['emailNotification'] === undefined) return false;
+    if (!('whatsappNotification' in value) || value['whatsappNotification'] === undefined) return false;
     return true;
 }
 
@@ -75,6 +82,7 @@ export function GroupMemberFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'name': json['name'],
         'avatar': json['avatar'] == null ? undefined : json['avatar'],
         'emailNotification': json['emailNotification'],
+        'whatsappNotification': json['whatsappNotification'],
         'pushTokens': json['pushTokens'] == null ? undefined : json['pushTokens'],
     };
 }
@@ -89,6 +97,7 @@ export function GroupMemberToJSON(value?: GroupMember | null): any {
         'name': value['name'],
         'avatar': value['avatar'],
         'emailNotification': value['emailNotification'],
+        'whatsappNotification': value['whatsappNotification'],
         'pushTokens': value['pushTokens'],
     };
 }

@@ -21,17 +21,24 @@ import { mapValues } from '../runtime';
 export interface GroupsGroupIdNotificationsPostRequest {
     /**
      * 
+     * @type {string}
+     * @memberof GroupsGroupIdNotificationsPostRequest
+     */
+    method: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof GroupsGroupIdNotificationsPostRequest
      */
-    email: boolean;
+    value: boolean;
 }
 
 /**
  * Check if a given object implements the GroupsGroupIdNotificationsPostRequest interface.
  */
 export function instanceOfGroupsGroupIdNotificationsPostRequest(value: object): value is GroupsGroupIdNotificationsPostRequest {
-    if (!('email' in value) || value['email'] === undefined) return false;
+    if (!('method' in value) || value['method'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +52,8 @@ export function GroupsGroupIdNotificationsPostRequestFromJSONTyped(json: any, ig
     }
     return {
         
-        'email': json['email'],
+        'method': json['method'],
+        'value': json['value'],
     };
 }
 
@@ -55,7 +63,8 @@ export function GroupsGroupIdNotificationsPostRequestToJSON(value?: GroupsGroupI
     }
     return {
         
-        'email': value['email'],
+        'method': value['method'],
+        'value': value['value'],
     };
 }
 

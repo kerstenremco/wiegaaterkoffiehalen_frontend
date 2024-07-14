@@ -85,7 +85,7 @@ const ProfileSettings: React.FC<Props> = (props) => {
                       <div className="grid grid-cols-3 gap-6">
                         <span>Groep</span>
                         <span>Email</span>
-                        <span>Push</span>
+                        <span>WhatsApp</span>
                         {mainContext.myGroups.map((group) => {
                           return (
                             <Fragment key={group.id}>
@@ -93,10 +93,15 @@ const ProfileSettings: React.FC<Props> = (props) => {
                               <Switch
                                 defaultSelected
                                 isSelected={group.emailNotification}
-                                onValueChange={(value) => mainContext.toggleNotificationFunction(group.id, value)}
-                                aria-label="Automatic updates"
+                                onValueChange={(value) => mainContext.toggleNotificationFunction(group.id, "email", value)}
+                                aria-label="emailNotification"
                               />
-                              <Switch defaultSelected isSelected={false} isDisabled={true} aria-label="Automatic updates" />
+                              <Switch
+                                defaultSelected
+                                isSelected={group.whatsappNotification}
+                                onValueChange={(value) => mainContext.toggleNotificationFunction(group.id, "whatsapp", value)}
+                                aria-label="whatsappNotification"
+                              />
                             </Fragment>
                           );
                         })}

@@ -55,8 +55,8 @@ const Onboard: React.FC = () => {
 
   return (
     <div className="flex h-full align-items-center">
-      <div className="flex w-4/5 max-w-7xl items-center m-auto">
-        <Card className="w-3/5 h-min p-8">
+      <div className="flex w-11/12 xl:w-auto max-w-7xl items-center m-auto">
+        <Card className="h-min w-full xl:min-w-[780px] p-8">
           <CardHeader></CardHeader>
           <CardBody>
             <div className="flex flex-row items-center gap-6">
@@ -92,7 +92,7 @@ const Onboard: React.FC = () => {
             </div>
           </CardBody>
         </Card>
-        <Lottie loop animationData={woman} play speed={0.1} style={{ width: 500 }} />
+        <Lottie loop animationData={woman} play speed={0.1} style={{ width: 500 }} className="hidden xl:block" />
       </div>
     </div>
   );

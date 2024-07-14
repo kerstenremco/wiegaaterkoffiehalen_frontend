@@ -17,14 +17,21 @@ interface IMainContext {
   ownerOfCurrentGroup: boolean;
   onlineMembers: string[];
   loadGroup: (groupId: string) => void;
-  updateProfileFunction: (name: string, avatar: string, initSetup?: boolean, verificationCode?: string) => Promise<void>;
+  updateProfileFunction: (options: {
+    name?: string;
+    avatar?: string;
+    InitSetup?: boolean;
+    verificationCode?: string;
+    phoneNumber?: string;
+    phoneNumberVerificationCode?: string;
+  }) => Promise<void>;
   updateGroupFunction: (name: string) => Promise<void>;
   deleteGroupFunction: () => Promise<void>;
   createGroupFunction: (name: string) => Promise<void>;
   createDrinkFunction: (name: string, icon: string, extras: string) => Promise<void>;
   updateDrinkFunction: (drinkId: string, name: string, icon: string, extras: string) => Promise<void>;
   deleteDrinkFunction: (drinkId: string) => Promise<void>;
-  toggleNotificationFunction: (groupId: string, email: boolean) => Promise<void>;
+  toggleNotificationFunction: (groupId: string, method: string, value: boolean) => Promise<void>;
   placeOrderFunction: (drink: string, text?: string, extras?: string) => Promise<void>;
   addMemberFunction: (email: string, isInvite: boolean) => Promise<MemberAddedMessageEnum | undefined>;
   changeMemberOwner: (userId: string, isOwner: boolean) => Promise<void>;
@@ -175,13 +182,21 @@ const Main: React.FC<Props> = (props) => {
   //   const [emailOfCurrentUser, setEmailOfCurrentUser] = useState<string | null>(null);
 
   // Funtions
-  providerValue.updateProfileFunction = async (name: string, avatar: string, InitSetup?: boolean, verificationCode?: string) => {
-    const isInitSetup = InitSetup || false;
+  providerValue.updateProfileFunction = async (options: {
+    name?: string;
+    avatar?: string;
+    InitSetup?: boolean;
+    verificationCode?: string;
+    phoneNumber?: string;
+    phoneNumberVerificationCode?: string;
+  }) => {
+    const { name, avatar, phoneNumber, phoneNumberVerificationCode } = options;
+    const isInitSetup = options.InitSetup || false;
     const usersApi = new Api.UsersApi(configuration);
-    const code = Number(verificationCode) || undefined;
+    const code = Number(options.verificationCode) || undefined;
     const response = await usersApi.usersPatch({
       accessToken,
-      usersPatchRequest: { name, avatar, isInitSetup, verificationCode: code }
+      usersPatchRequest: { name, avatar: avatar, isInitSetup, verificationCode: code, phoneNumber, phoneNumberVerificationCode }
     });
     setProfile(response.profile);
     if (response.groups) setMyGroups(response.groups);
@@ -325,13 +340,13 @@ const Main: React.FC<Props> = (props) => {
     providerValue.loadGroup(currentGroupId);
     // No refresh needed because socket sends update request
   };
-  providerValue.toggleNotificationFunction = async (groupId: string, email: boolean) => {
+  providerValue.toggleNotificationFunction = async (groupId: string, method: string, value: boolean) => {
     if (!currentGroup || !currentGroupId) return;
     const groupNotificationApi = new Api.GroupNotificationApi(configuration);
     await groupNotificationApi.groupsGroupIdNotificationsPost({
       accessToken,
       groupId,
-      groupsGroupIdNotificationsPostRequest: { email }
+      groupsGroupIdNotificationsPostRequest: { method, value }
     });
     await getProfileFunction();
   };

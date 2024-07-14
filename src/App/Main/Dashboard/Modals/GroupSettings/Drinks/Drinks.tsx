@@ -63,7 +63,6 @@ const Drinks: React.FC<Props> = (props) => {
       <div data-cy="groupSettingsDrinkItems" className="flex flex-col gap-3 mt-3">
         {mainContext.currentGroup.drinks.map((drink) => {
           const iconIsValid = Object.prototype.hasOwnProperty.call(coffeeIcons, drink.icon);
-          console.log(drink.name, drink.icon, iconIsValid);
           const icon = iconIsValid ? coffeeIcons[drink.icon] : coffeeIcons.coffeeCup;
           if (drink.active)
             return (

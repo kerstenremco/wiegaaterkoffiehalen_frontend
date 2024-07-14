@@ -43,6 +43,24 @@ export interface Profile {
      * @memberof Profile
      */
     name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Profile
+     */
+    phoneNumber?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Profile
+     */
+    phoneNumberVerified: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Profile
+     */
+    phoneNumberAsked?: string;
 }
 
 /**
@@ -53,6 +71,7 @@ export function instanceOfProfile(value: object): value is Profile {
     if (!('email' in value) || value['email'] === undefined) return false;
     if (!('avatar' in value) || value['avatar'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('phoneNumberVerified' in value) || value['phoneNumberVerified'] === undefined) return false;
     return true;
 }
 
@@ -70,6 +89,9 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'email': json['email'],
         'avatar': json['avatar'],
         'name': json['name'],
+        'phoneNumber': json['phoneNumber'] == null ? undefined : json['phoneNumber'],
+        'phoneNumberVerified': json['phoneNumberVerified'],
+        'phoneNumberAsked': json['phoneNumberAsked'] == null ? undefined : json['phoneNumberAsked'],
     };
 }
 
@@ -83,6 +105,9 @@ export function ProfileToJSON(value?: Profile | null): any {
         'email': value['email'],
         'avatar': value['avatar'],
         'name': value['name'],
+        'phoneNumber': value['phoneNumber'],
+        'phoneNumberVerified': value['phoneNumberVerified'],
+        'phoneNumberAsked': value['phoneNumberAsked'],
     };
 }
 

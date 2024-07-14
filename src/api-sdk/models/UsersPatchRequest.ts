@@ -24,34 +24,43 @@ export interface UsersPatchRequest {
      * @type {string}
      * @memberof UsersPatchRequest
      */
-    name: string;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof UsersPatchRequest
      */
-    avatar: string;
+    avatar?: string;
     /**
      * 
      * @type {boolean}
      * @memberof UsersPatchRequest
      */
-    isInitSetup: boolean;
+    isInitSetup?: boolean;
     /**
      * 
      * @type {number}
      * @memberof UsersPatchRequest
      */
     verificationCode?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsersPatchRequest
+     */
+    phoneNumber?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsersPatchRequest
+     */
+    phoneNumberVerificationCode?: string;
 }
 
 /**
  * Check if a given object implements the UsersPatchRequest interface.
  */
 export function instanceOfUsersPatchRequest(value: object): value is UsersPatchRequest {
-    if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('avatar' in value) || value['avatar'] === undefined) return false;
-    if (!('isInitSetup' in value) || value['isInitSetup'] === undefined) return false;
     return true;
 }
 
@@ -65,10 +74,12 @@ export function UsersPatchRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'name': json['name'],
-        'avatar': json['avatar'],
-        'isInitSetup': json['isInitSetup'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'avatar': json['avatar'] == null ? undefined : json['avatar'],
+        'isInitSetup': json['isInitSetup'] == null ? undefined : json['isInitSetup'],
         'verificationCode': json['verificationCode'] == null ? undefined : json['verificationCode'],
+        'phoneNumber': json['phoneNumber'] == null ? undefined : json['phoneNumber'],
+        'phoneNumberVerificationCode': json['phoneNumberVerificationCode'] == null ? undefined : json['phoneNumberVerificationCode'],
     };
 }
 
@@ -82,6 +93,8 @@ export function UsersPatchRequestToJSON(value?: UsersPatchRequest | null): any {
         'avatar': value['avatar'],
         'isInitSetup': value['isInitSetup'],
         'verificationCode': value['verificationCode'],
+        'phoneNumber': value['phoneNumber'],
+        'phoneNumberVerificationCode': value['phoneNumberVerificationCode'],
     };
 }
 

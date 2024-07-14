@@ -10,6 +10,7 @@ import NoActiveDrawing from "./NoActiveDrawing";
 import PlaceOrder from "./Modals/PlaceOrder";
 import ActiveDrawing from "./ActiveDrawing";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 
 import NoGroup from "./NoGroup";
 
@@ -27,6 +28,8 @@ const ActiveGroup: React.FC<Props> = (props) => {
 
   const [startDrawing, setStartDrawing] = useState(false);
   const [placeOrder, setPlaceOrder] = useState(false);
+  const {id} = useParams();
+    
 
   useEffect(() => {
     if (mainContext.myGroups.length == 0) return setState("noGroup");
@@ -51,6 +54,10 @@ const ActiveGroup: React.FC<Props> = (props) => {
     }
     return setState(undefined);
   }, [mainContext.myGroups, mainContext.currentGroup]);
+
+  useEffect(() => {
+    if(id && id != mainContext.currentGroup?.id) mainContext.loadGroup(id);
+  });
 
   const handleCommitOrder = async (chosenDrink: string, text?: string, extras?: string[]) => {
     const extraString = extras?.join(", ");

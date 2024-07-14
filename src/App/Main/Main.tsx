@@ -18,12 +18,12 @@ const Main: React.FC = () => {
     }
   }, [mainContext.profile]);
   return (
-    <>
-      <Alert message={mainContext.alertMessage} onClose={mainContext.acknowledgeAlert} />
-      {isNewUser == undefined && <Loading />}
+<>
+        <Alert message={mainContext.alertMessage} onClose={mainContext.acknowledgeAlert} />
+        {isNewUser == undefined && <Loading />}
       {isNewUser == true && <Onboard />}
       {isNewUser == false && <Dashboard />}
-    </>
+      </>
   );
 };
 

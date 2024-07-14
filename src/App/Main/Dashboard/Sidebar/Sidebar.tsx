@@ -17,11 +17,9 @@ const Sidebar: React.FC<Props> = (props) => {
   if (!myGroups) throw new Error("No groups found in Main context");
   return (
     <div className="flex-none w-24 xl:w-80 bg-primary-100 flex flex-col p-4 transition-width" id="bar">
-      {/* <GroupMenu onAddGroup={() => setCreateNewGroup(true)} /> */}
       <GroupMenu
         onCreateNewGroup={props.onCreateNewGroup}
         groups={myGroups}
-        onClickGroup={mainContext.loadGroup}
         currentGroupName={mainContext.currentGroup?.name}
       />
       <Divider className="my-4" />

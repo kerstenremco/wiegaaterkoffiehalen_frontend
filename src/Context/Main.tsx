@@ -8,6 +8,7 @@ import {
 } from "../api-sdk";
 import { io } from "socket.io-client";
 import * as Api from "../api-sdk";
+import { useNavigate } from "react-router-dom";
 
 const configuration = new Api.Configuration({
   basePath: import.meta.env.VITE_API_PATH,
@@ -70,6 +71,7 @@ type Props = {
 
 const Main: React.FC<Props> = (props) => {
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
   if (!authContext || typeof authContext.accessToken != "string")
     throw new Error("No Auth context");
   const accessToken = authContext.accessToken;
@@ -176,14 +178,7 @@ const Main: React.FC<Props> = (props) => {
   // If no group selected yet, check if group is provider in url, or select first group
   useEffect(() => {
     if (!currentGroupId && myGroups.length > 0) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const groupId = urlParams.get("group");
-      const groupIdIsValid = groupId && myGroups.find((g) => g.id == groupId);
-      if (groupIdIsValid) {
-        providerValue.loadGroup(groupId);
-      } else {
-        providerValue.loadGroup(myGroups[0].id);
-      }
+      providerValue.loadGroup(myGroups[0].id);
     }
   }, [myGroups]);
 

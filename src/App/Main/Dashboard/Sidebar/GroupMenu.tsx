@@ -2,9 +2,12 @@ import { DropdownTrigger, Dropdown, DropdownMenu, DropdownItem, DropdownSection,
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { GroupMember } from "../../../../api-sdk";
+import { useNavigate } from "react-router-dom";
 
-type Props = { groups: GroupMember[]; onCreateNewGroup: () => void; onClickGroup: (groupId: string) => void; currentGroupName?: string };
+
+type Props = { groups: GroupMember[]; onCreateNewGroup: () => void; currentGroupName?: string };
 const GroupMenu: React.FC<Props> = (props) => {
+  const navigate = useNavigate();
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -19,7 +22,7 @@ const GroupMenu: React.FC<Props> = (props) => {
       <DropdownMenu aria-label="Dynamic Actions">
         <DropdownSection showDivider>
           {props.groups.map((group) => (
-            <DropdownItem key={group.id} color="primary" startContent={<Avatar name={group.name} />} onClick={() => props.onClickGroup(group.id)}>
+            <DropdownItem key={group.id} color="primary" startContent={<Avatar name={group.name} />} onClick={() => navigate(`/dashboard/groups/${group.id}`)}>
               {group.name}
             </DropdownItem>
           ))}

@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { faUser, faBell, faMugHot, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter, Button, Tabs, Tab } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 // Context
 import { MainContext } from "../../../../../Context/Main";
 // components
@@ -15,6 +16,7 @@ type Props = { onClose: () => void; isOpen: boolean };
 const GroupSettings: React.FC<Props> = (props) => {
   // Context
   const mainContext = useContext(MainContext);
+  const navigate = useNavigate();
 
   // States
   const [blade, setBlade] = useState("group");
@@ -41,6 +43,8 @@ const GroupSettings: React.FC<Props> = (props) => {
   const handleDeleteGroup = async () => {
     if (mainContext && mainContext.currentGroup) {
       await mainContext.deleteGroupFunction();
+      // Navigate back to default
+      navigate("/dashboard/groups/default");
       props.onClose();
     }
   };

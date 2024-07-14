@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import * as authUtils from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 type SignIn = (email: string, password: string) => Promise<void>;
 type SignInCurrentUser = () => Promise<void>;
@@ -36,6 +37,7 @@ const Auth: React.FC<Props> = (props) => {
   const [authenticationMessage, setAuthenticationMessage] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
   const [waitingForCognito, setWaitingForCognito] = useState(false);
+  const navigate = useNavigate();
 
   // Funtions
   const signIn: SignIn = async (email, password) => {
@@ -45,6 +47,10 @@ const Auth: React.FC<Props> = (props) => {
       await authUtils.signIn(email, password);
       const accessToken = await authUtils.loadAccessToken();
       setAccessToken(accessToken);
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectToGroup = urlParams.get("redirectToGroup");
+      if (redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
+      else navigate("/dashboard/groups/default");
     } catch (e) {
       if (typeof e == "string") setAuthenticationError(e);
       else setAuthenticationError("Er is iets fout gegaan");
@@ -58,6 +64,10 @@ const Auth: React.FC<Props> = (props) => {
     try {
       const accessToken = await authUtils.loadAccessToken();
       setAccessToken(accessToken);
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectToGroup = urlParams.get("redirectToGroup");
+      if (redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
+      else navigate("/dashboard/groups/default");
     } catch (e) {
       if (typeof e == "string") setAuthenticationError(e);
       else setAuthenticationError("Er is iets fout gegaan");
@@ -71,6 +81,11 @@ const Auth: React.FC<Props> = (props) => {
     try {
       await authUtils.signUp(email, password);
       await signIn(email, password);
+      const navigate = useNavigate();
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectToGroup = urlParams.get("redirectToGroup");
+      if (redirectToGroup) navigate(`/dashboard/groups/${redirectToGroup}`);
+      else navigate("/dashboard/groups/default");
     } catch (e) {
       if (typeof e == "string") setAuthenticationError(e);
       else setAuthenticationError("Er is iets fout gegaan");
@@ -107,6 +122,7 @@ const Auth: React.FC<Props> = (props) => {
   const signOut: SignOut = async () => {
     await authUtils.signOut();
     setAccessToken(undefined);
+    navigate("/login");
   };
 
   // Check if user is already logged in

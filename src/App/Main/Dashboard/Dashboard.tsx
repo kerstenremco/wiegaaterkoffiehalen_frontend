@@ -14,11 +14,12 @@ const Dashboard: React.FC = () => {
       <NewGroup onClose={() => setCreateNewGroupIsActive(false)} isOpen={createNewGroupIsActive} />
       <ProfileSettings onClose={() => setEditProfileIsActive(false)} isOpen={editProfileIsActive} />
       <GroupSettings onClose={() => setEditGroupIsActive(false)} isOpen={editGroupIsActive} />
-      <div className="flex h-screen">
+      <div className="flex h-svh fixed xl:static">
         <Sidebar onCreateNewGroup={() => setCreateNewGroupIsActive(true)} onEditProfile={() => setEditProfileIsActive(true)} />
-        <ActiveGroup onCreateNewGroup={() => setCreateNewGroupIsActive(true)} onEditGroup={() => setEditGroupIsActive(true)} />
+        
+          <ActiveGroup onCreateNewGroup={() => setCreateNewGroupIsActive(true)} onEditGroup={() => setEditGroupIsActive(true)} />
       </div>
-    </>
+      </>
   );
 };
 

@@ -13,9 +13,11 @@ const ProfileMenu: React.FC<Props> = (props) => {
         <div className="bg-primary-200 p-2 flex cursor-pointer rounded-lg">
           <User
             name={props.name}
+            classNames={{name: "hidden xl:block" }}
             avatarProps={{
               src: `${avatarUrl}${props.avatar}`
             }}
+
           />
         </div>
       </DropdownTrigger>

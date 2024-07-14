@@ -20,7 +20,7 @@ const User: React.FC<Props> = (props) => {
       <Badge content="" color={props.isOnline ? "success" : "danger"} shape="circle" placement="bottom-right">
         <ProfilePicture avatar={props.avatar} />
       </Badge>
-      <p>{props.name}</p>
+      <p className="hidden xl:block">{props.name}</p>
     </div>
   );
 };

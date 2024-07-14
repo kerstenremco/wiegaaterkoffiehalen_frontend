@@ -64,38 +64,36 @@ const ActiveGroup: React.FC<Props> = (props) => {
       {startDrawing && <StartDrawing close={() => setStartDrawing(false)} startDrawing={mainContext.startDrawing} />}
 
       {placeOrder && <PlaceOrder close={() => setPlaceOrder(false)} placeOrder={handleCommitOrder} drinks={mainContext.currentGroup?.drinks} />}
-      <div className="flex-1 flex h-screen">
-        <div className="flex flex-col m-5 w-full">
-          {mainContext.ownerOfCurrentGroup && (
-            <FontAwesomeIcon
-              data-cy="groupSettingsButton"
-              size="2x"
-              className="self-end hover:scale-110"
-              icon={faSliders}
-              onClick={props.onEditGroup}
+      <div className="flex flex-col flex-1 m-5 w-full">
+        {mainContext.ownerOfCurrentGroup && (
+          <FontAwesomeIcon
+            data-cy="groupSettingsButton"
+            size="2x"
+            className="self-end scale-80 xl:scale-100 xl:hover:scale-110"
+            icon={faSliders}
+            onClick={props.onEditGroup}
+          />
+        )}
+        <div className="flex flex-col flex-1 justify-center items-center xl:gap-10 h-full" id="groupState">
+          {state == "activeDrawing" && mainContext.currentGroup?.activeDrawing && (
+            <ActiveDrawing
+              self={mainContext.currentGroup.activeDrawing.self}
+              startedBy={mainContext.currentGroup.activeDrawing.startedBy.name}
+              seconds={mainContext.currentGroup.activeDrawing.endsInSeconds}
+              placedOrder={myOrder != undefined}
+              handlePlaceOrder={() => setPlaceOrder(true)}
             />
           )}
-          <div className="flex flex-col flex-1 justify-center items-center gap-10 h-full" id="groupState">
-            {state == "activeDrawing" && mainContext.currentGroup?.activeDrawing && (
-              <ActiveDrawing
-                self={mainContext.currentGroup.activeDrawing.self}
-                startedBy={mainContext.currentGroup.activeDrawing.startedBy.name}
-                seconds={mainContext.currentGroup.activeDrawing.endsInSeconds}
-                placedOrder={myOrder != undefined}
-                handlePlaceOrder={() => setPlaceOrder(true)}
-              />
-            )}
-            {state == "newGroupInfo" && <NewGroupInfo />}
-            {state == "noActiveDrawing" && <NoActiveDrawing setStartDrawing={() => setStartDrawing(true)} />}
-            {state == "noGroup" && <NoGroup onCreateNewGroup={props.onCreateNewGroup} />}
-            {state == "result" && (
-              <Result
-                who={mainContext.currentGroup?.lastDrawing?.who?.name || ""}
-                self={mainContext.currentGroup?.lastDrawing?.who?.id == mainContext.profile?.id}
-                startDrawing={() => setStartDrawing(true)}
-              />
-            )}
-          </div>
+          {state == "newGroupInfo" && <NewGroupInfo />}
+          {state == "noActiveDrawing" && <NoActiveDrawing setStartDrawing={() => setStartDrawing(true)} />}
+          {state == "noGroup" && <NoGroup onCreateNewGroup={props.onCreateNewGroup} />}
+          {state == "result" && (
+            <Result
+              who={mainContext.currentGroup?.lastDrawing?.who?.name || ""}
+              self={mainContext.currentGroup?.lastDrawing?.who?.id == mainContext.profile?.id}
+              startDrawing={() => setStartDrawing(true)}
+            />
+          )}
         </div>
       </div>
     </>

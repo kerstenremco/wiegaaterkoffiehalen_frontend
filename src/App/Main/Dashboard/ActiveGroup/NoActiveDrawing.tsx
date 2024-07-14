@@ -1,4 +1,4 @@
-import { Button as B } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import Lottie from "react-lottie-player/dist/LottiePlayerLight";
 import { together } from "../../../../assets/lottie";
 
@@ -6,9 +6,9 @@ const NoActiveDrawing: React.FC<{ setStartDrawing: () => void }> = (props) => {
   return (
     <>
       <Lottie loop animationData={together} play speed={0.1} segments={[34, 120]} style={{ maxHeight: 500, height: "60%" }} />
-      <B className="w-1/4" color="primary" variant="shadow" onClick={props.setStartDrawing}>
+      <Button className="xl:w-1/4" color="primary" variant="shadow" onClick={props.setStartDrawing}>
         Koffieronde starten
-      </B>
+      </Button>
     </>
   );
 };

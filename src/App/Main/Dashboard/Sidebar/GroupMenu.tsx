@@ -9,9 +9,8 @@ const GroupMenu: React.FC<Props> = (props) => {
     <Dropdown>
       <DropdownTrigger>
         <div className="bg-primary-200 flex items-center gap-2 p-2 cursor-pointer rounded-lg">
-          {/* <Avatar name={groupContext.currentGroup.name} /> */}
-          <Avatar name={"groupContext.currentGroup.name"} />
-          <span className="flex-1">{props.currentGroupName || "Selecteer groep"}</span>
+          <Avatar className="w-6 h-6 xl:h-10 xl:w-10" name={"groupContext.currentGroup.name"} />
+          <span className="flex-1 hidden xl:block">{props.currentGroupName || "Selecteer groep"}</span>
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
       </DropdownTrigger>

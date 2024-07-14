@@ -64,18 +64,17 @@ const ActiveGroup: React.FC<Props> = (props) => {
       {startDrawing && <StartDrawing close={() => setStartDrawing(false)} startDrawing={mainContext.startDrawing} />}
 
       {placeOrder && <PlaceOrder close={() => setPlaceOrder(false)} placeOrder={handleCommitOrder} drinks={mainContext.currentGroup?.drinks} />}
-      <div className="flex-1 flex h-screen">
-        <div className="flex flex-col m-5 w-full">
+        <div className="flex flex-col flex-1 m-5 w-full">
           {mainContext.ownerOfCurrentGroup && (
             <FontAwesomeIcon
               data-cy="groupSettingsButton"
               size="2x"
-              className="self-end hover:scale-110"
+              className="self-end scale-80 xl:scale-100 xl:hover:scale-110"
               icon={faSliders}
               onClick={props.onEditGroup}
             />
           )}
-          <div className="flex flex-col flex-1 justify-center items-center gap-10 h-full" id="groupState">
+          <div className="flex flex-col flex-1 justify-center items-center xl:gap-10 h-full" id="groupState">
             {state == "activeDrawing" && mainContext.currentGroup?.activeDrawing && (
               <ActiveDrawing
                 self={mainContext.currentGroup.activeDrawing.self}
@@ -97,7 +96,6 @@ const ActiveGroup: React.FC<Props> = (props) => {
             )}
           </div>
         </div>
-      </div>
     </>
   );
 };

@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary>
       <NextUIProvider>
-        <main className="light text-foreground bg-background w-screen h-screen">
+        <main className="light text-foreground bg-background w-svw h-svh">
           <AuthContextProvider>
             <App />
           </AuthContextProvider>

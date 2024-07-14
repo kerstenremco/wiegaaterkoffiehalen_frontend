@@ -16,7 +16,7 @@ const Sidebar: React.FC<Props> = (props) => {
   if (!profile) throw new Error("No profile found in Main context");
   if (!myGroups) throw new Error("No groups found in Main context");
   return (
-    <div className="flex-none w-80 bg-primary-100 flex flex-col p-4" id="bar">
+    <div className="flex-none w-24 xl:w-80 bg-primary-100 flex flex-col p-4 transition-width" id="bar">
       {/* <GroupMenu onAddGroup={() => setCreateNewGroup(true)} /> */}
       <GroupMenu
         onCreateNewGroup={props.onCreateNewGroup}
@@ -25,7 +25,7 @@ const Sidebar: React.FC<Props> = (props) => {
         currentGroupName={mainContext.currentGroup?.name}
       />
       <Divider className="my-4" />
-      <div className="grow">
+      <div className="grow overflow-y-scroll hidescroll">
         <OnlineUsers users={mainContext.currentGroup?.members} onlineUsers={mainContext.onlineMembers} ownUserId={mainContext.profile?.id} />
       </div>
       <div>

@@ -93,8 +93,8 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex h-full align-items-center">
-      <div className="flex max-w-7xl items-center m-auto">
-        <Card className="h-min min-w-[780px] p-8">
+      <div className="flex w-11/12 xl:w-auto max-w-7xl items-center m-auto">
+        <Card className="h-min w-full xl:min-w-[780px] p-8">
           <CardHeader></CardHeader>
           <CardBody>
             <div className="flex flex-col gap-4 items-center flex-1" id="loginSecond">
@@ -165,7 +165,7 @@ const Login: React.FC = () => {
             </div>
           </CardBody>
         </Card>
-        <Lottie loop animationData={boyGirlHoldingCoffee} play speed={0.1} segments={[34, 120]} />
+        <Lottie loop animationData={boyGirlHoldingCoffee} play speed={0.1} segments={[34, 120]} className="hidden xl:block" />
       </div>
     </div>
   );

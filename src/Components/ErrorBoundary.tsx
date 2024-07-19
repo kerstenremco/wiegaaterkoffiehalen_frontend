@@ -12,10 +12,8 @@ const FallbackUserInterface = ({ error }) => {
     Object.keys(localStorage)
       .filter((x) => x.startsWith("Cognito"))
       .forEach((x) => localStorage.removeItem(x));
-    alert(9);
     window.location.href = "/";
   };
-  // Sentry.captureException(error);
   console.error(error);
   return (
     <Modal isOpen={true} isDismissable={false} isKeyboardDismissDisabled={false} hideCloseButton={true}>

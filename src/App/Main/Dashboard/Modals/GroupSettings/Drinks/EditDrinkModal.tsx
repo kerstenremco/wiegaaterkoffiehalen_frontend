@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Input, Avatar, Modal, ModalBody, ModalHeader, ModalContent, ModalFooter, Button } from "@nextui-org/react";
+import { Input, Avatar, Button } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Icons
-import { faMugHot, faTrashCan, faSquareCheck, faCircleDot } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faSquareCheck, faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import coffeeIcons from "../../../../../../assets/coffee-icons";
 import useValidator from "../../../../../../hooks/useValidator";
 // Utils

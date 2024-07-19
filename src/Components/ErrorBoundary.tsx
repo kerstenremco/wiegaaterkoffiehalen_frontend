@@ -1,7 +1,6 @@
 import React from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 import { ErrorBoundary as EB } from "react-error-boundary";
-import * as Sentry from "@sentry/react";
 // Components
 import Button from "./layout/Button";
 

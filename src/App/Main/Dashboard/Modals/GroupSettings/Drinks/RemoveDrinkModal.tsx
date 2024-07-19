@@ -1,4 +1,5 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 type Props = {
   removeDrink: string | undefined;
   onClose: () => void;

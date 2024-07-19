@@ -3,7 +3,7 @@ import { AuthContext } from "./Auth";
 import { Profile, GroupMember, Group, MemberAddedMessageEnum } from "../api-sdk";
 import { io } from "socket.io-client";
 import * as Api from "../api-sdk";
-import { useParams, Navigator, useNavigation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const configuration = new Api.Configuration({
   basePath: import.meta.env.VITE_API_PATH
@@ -153,6 +153,13 @@ const Main: React.FC<Props> = (props) => {
     }
   }, [groupId, myGroups]);
 
+  // If profile is (re)loaded or group is (re)loaded, then check if user is owner
+  useEffect(() => {
+    if (!profile || !currentGroup) return;
+    const owner = currentGroup.members.find((m) => m.user.id == profile.id)?.owner || false;
+    setOwnerOfCurrentGroup(owner);
+  }, [profile, currentGroup]);
+
   // Get profile
   const getProfileFunction = async () => {
     const usersApi = new Api.UsersApi(configuration);
@@ -166,9 +173,6 @@ const Main: React.FC<Props> = (props) => {
     const groupApi = new Api.GroupApi(configuration);
     const group = await groupApi.groupsGroupIdGet({ accessToken, groupId });
     setCurrentGroup(group);
-    // Check if user is owner
-    const owner = group.members.find((m) => m.user.id == profile?.id)?.owner || false;
-    setOwnerOfCurrentGroup(owner);
     // Say room is joined over socket
     socket.current.emit("switchGroup", {
       token: accessToken,

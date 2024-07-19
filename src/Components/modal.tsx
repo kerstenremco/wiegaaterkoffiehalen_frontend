@@ -1,4 +1,5 @@
-import { Button, Modal as NModal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
+import { Modal as NModal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 
 type Props = { title: string; content: any; confirmText: string; cancelText: string; confirm: () => void; cancel: () => void };
 

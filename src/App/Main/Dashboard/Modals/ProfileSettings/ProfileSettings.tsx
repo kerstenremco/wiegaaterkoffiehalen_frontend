@@ -1,5 +1,6 @@
 import { faBell, faUser, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Switch, Tab, Tabs, Tooltip } from "@nextui-org/react";
+import { Switch, Tab, Tabs, Tooltip, Button, Input } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 import { Fragment, useContext, useEffect, useState } from "react";
 // Context
 import { MainContext } from "../../../../../Context/Main";

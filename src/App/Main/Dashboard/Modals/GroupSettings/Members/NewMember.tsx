@@ -1,4 +1,5 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Checkbox } from "@nextui-org/react";
+import { Button, Input, Checkbox } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 import { useState } from "react";
 type Props = {
   onClose: () => void;

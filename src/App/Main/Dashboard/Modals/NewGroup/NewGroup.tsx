@@ -1,4 +1,5 @@
-import { Modal, ModalContent, ModalBody, Input, ModalHeader, ModalFooter, Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 import { useState, useContext } from "react";
 import useValidator from "../../../../../hooks/useValidator";
 import { MainContext } from "../../../../../Context/Main";

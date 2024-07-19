@@ -1,4 +1,5 @@
-import { Modal, ModalContent, ModalBody, Input, Checkbox } from "@nextui-org/react";
+import { Input, Checkbox } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody } from "@nextui-org/modal";
 import { useEffect, useState } from "react";
 import Button from "../../../../../Components/layout/Button";
 

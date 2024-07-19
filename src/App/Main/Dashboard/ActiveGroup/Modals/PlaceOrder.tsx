@@ -1,4 +1,5 @@
-import { Modal, ModalContent, ModalBody, Avatar, Tooltip, Input, CheckboxGroup, Checkbox, Button } from "@nextui-org/react";
+import { Avatar, Tooltip, Input, CheckboxGroup, Checkbox, Button } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody } from "@nextui-org/modal";
 import { useEffect, useState } from "react";
 import coffeeIcons from "../../../../../assets/coffee-icons";
 import useValidator from "../../../../../hooks/useValidator";

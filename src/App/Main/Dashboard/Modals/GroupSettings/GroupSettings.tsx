@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { faUser, faBell, faMugHot, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
-import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter, Button, Tabs, Tab } from "@nextui-org/react";
+import { Button, Tabs, Tab } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 // Context

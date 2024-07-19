@@ -1,4 +1,5 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, Button, Input, Divider, Progress } from "@nextui-org/react";
+import { Button, Input, Divider, Progress } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalHeader } from "@nextui-org/modal";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../../../../../Context/Main";
 

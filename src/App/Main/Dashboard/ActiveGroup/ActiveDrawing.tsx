@@ -12,16 +12,20 @@ type Props = {
 
 const ActiveDrawing: React.FC<Props> = (props) => {
   const [remainingTime, setRemainingTime] = useState<number>(props.seconds);
+
+  const fromTime = Math.round(Date.now() / 1000);
   const minutes = Math.floor(remainingTime / 60)
     .toString()
     .padStart(2, "0");
   const seconds = (remainingTime % 60).toString().padStart(2, "0");
   useEffect(() => {
     const interval = setInterval(() => {
-      setRemainingTime((old) => old - 1);
+      const now = Math.round(Date.now() / 1000);
+      const remainingTime = props.seconds - (now - fromTime);
+      if (remainingTime >= 0) setRemainingTime(remainingTime);
     }, 1000);
     return () => clearInterval(interval);
-  });
+  }, []);
   return (
     <>
       <div className="text-center font-extralight">

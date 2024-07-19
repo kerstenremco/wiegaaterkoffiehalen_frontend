@@ -31,6 +31,7 @@ const StartDrawing: React.FC<Props> = (props) => {
           <h1 className="text-center">Alright, koffietijd!</h1>
           <Input
             type="number"
+            inputMode="numeric"
             label="Aantal minuten voordat ronde begint"
             labelPlacement="outside"
             value={time}

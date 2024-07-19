@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
       />
       <PhoneSettings onClose={() => setEditPhoneIsActive(false)} isOpen={editPhoneIsActive} />
       <GroupSettings onClose={() => setEditGroupIsActive(false)} isOpen={editGroupIsActive} />
-      <div className="flex h-svh fixed xl:static">
+      <div className="flex h-svh fixed xl:static w-full">
         <Sidebar onCreateNewGroup={() => setCreateNewGroupIsActive(true)} onEditProfile={() => setEditProfileIsActive(true)} />
 
         <ActiveGroup onCreateNewGroup={() => setCreateNewGroupIsActive(true)} onEditGroup={() => setEditGroupIsActive(true)} />

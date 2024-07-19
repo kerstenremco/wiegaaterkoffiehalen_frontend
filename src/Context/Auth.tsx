@@ -122,6 +122,7 @@ const Auth: React.FC<Props> = (props) => {
   const signOut: SignOut = async () => {
     await authUtils.signOut();
     setAccessToken(undefined);
+    setEmailOfCurrentUser(null);
     navigate("/login");
   };
 

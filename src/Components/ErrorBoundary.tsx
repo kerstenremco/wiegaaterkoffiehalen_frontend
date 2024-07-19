@@ -6,13 +6,14 @@ import Button from "./layout/Button";
 
 // ErrorBoundary Fallback function
 // @ts-expect-error no types for error and resetErrorBoundary
-const FallbackUserInterface = ({ error, resetErrorBoundary }) => {
+const FallbackUserInterface = ({ error }) => {
   const reset = () => {
     // remove all Cognito items from localStorage
     Object.keys(localStorage)
       .filter((x) => x.startsWith("Cognito"))
       .forEach((x) => localStorage.removeItem(x));
-    resetErrorBoundary();
+    alert(9);
+    window.location.href = "/";
   };
   // Sentry.captureException(error);
   console.error(error);

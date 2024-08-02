@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter } from "@nextui-org/modal";
-import { ErrorBoundary as EB } from "react-error-boundary";
+import * as Sentry from "@sentry/react";
 // Components
 import Button from "./layout/Button";
 
@@ -40,7 +40,7 @@ type Props = {
 };
 
 const ErrorBoundary: React.FC<Props> = (props: Props) => {
-  return <EB fallbackRender={FallbackUserInterface}>{props.children}</EB>;
+  return <Sentry.ErrorBoundary fallback={FallbackUserInterface}>{props.children}</Sentry.ErrorBoundary>;
 };
 
 export default ErrorBoundary;

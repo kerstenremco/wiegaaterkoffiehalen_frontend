@@ -11,6 +11,13 @@ const App: React.FC = () => {
   if (!authContext) throw new Error("No Auth context");
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("\x1b[33m%s\x1b[0m", `wiegaaterkoffiehalen.nl frontend versie ${import.meta.env.PACKAGE_VERSION} 🍺`);
+    fetch("https://api.wiegaaterkoffiehalen.nl/api/v1/version").then(
+      (response) => response.text().then((data) => console.log("\x1b[33m%s\x1b[0m", `wiegaaterkoffiehalen.nl backend versie ${data} 🔥`))
+      // console.log("\x1b[33m%s\x1b[0m", `Backend versie ${data.text} \u{1F9E1}`)
+    );
+  }, []);
+  useEffect(() => {
     const url = window.location.href;
     if (!authContext.accessToken && !url.includes("/login")) {
       if (url.includes("/groups/")) {

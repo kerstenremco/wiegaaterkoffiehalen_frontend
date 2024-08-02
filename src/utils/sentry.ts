@@ -1,10 +1,10 @@
 import * as Sentry from "@sentry/react";
 
-if (import.meta.env.VITE_ENVIRONMENT != "development") {
+if (import.meta.env.VITE_SENTRY == "enable") {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN,
     environment: import.meta.env.VITE_ENVIRONMENT,
-    release: import.meta.env.VITE_VER,
+    release: import.meta.env.PACKAGE_VERSION,
     integrations: [
       Sentry.replayIntegration({
         maskAllText: false,

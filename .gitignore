@@ -218,3 +218,5 @@ sketch
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,react,visualstudiocode,cypressio
+# Sentry Config File
+.env.sentry-build-plugin

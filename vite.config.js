@@ -11,7 +11,6 @@ export default defineConfig({
     sentryVitePlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN,
       org: "remco-0b",
-      project: "javascript-react",
       project: "wiegaaterkoffiehalen"
     })
   ],
